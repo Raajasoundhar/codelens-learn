@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Understand code one idea at a time. Explore free examples or connect Claude for clear explanations, key concepts, and practice questions.">
+  <title>CodeLens Learn — Understand your code</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Skip to workspace</a>
+  <aside class="sidebar">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true">&lt;/&gt;</span><span>CodeLens<span class="brand-sub">LEARN</span></span></a>
+    <div class="sidebar-middle">
+      <p class="overline">YOUR LEARNING SPACE</p>
+      <a class="nav-active" href="#workspace"><span aria-hidden="true">⌘</span> Code explainer <span class="nav-dot"></span></a>
+      <p class="overline examples-label">START WITH AN EXAMPLE</p>
+      <button class="example-card selected" data-sample="javascript"><span class="language-icon">JS</span><span>Filter &amp; transform<small>JavaScript · Arrays</small></span><span aria-hidden="true">↗</span></button>
+      <button class="example-card" data-sample="python"><span class="language-icon python">Py</span><span>Count with a dictionary<small>Python · Dictionaries</small></span><span aria-hidden="true">↗</span></button>
+      <div class="sidebar-note"><span aria-hidden="true">✧</span><p>Build understanding.<br><strong>Not just working code.</strong></p><small>Read the explanation. Predict the result. Make the idea yours.</small></div>
+    </div>
+    <a class="github-link" href="https://github.com/Raajasoundhar/codelens-learn" target="_blank" rel="noreferrer">Open source on GitHub <span aria-hidden="true">↗</span></a>
+    <span class="version">v0.1 · An independent learning project</span>
+  </aside>
+  <main>
+    <header class="topbar"><span>Workspace <span class="slash">/</span> <strong>Code explainer</strong></span><span class="status-pill" id="connection-status">Sample mode</span></header>
+    <section class="intro"><span class="eyebrow">A LITTLE CLARITY GOES A LONG WAY</span><h1>From “it works” to<br>“I get it.”<span class="spark" aria-hidden="true">✳</span></h1><p>Turn a code snippet into a lesson you can actually follow.<br>One step, one concept, one small breakthrough at a time.</p></section>
+    <section id="workspace" class="workspace" aria-label="Code explanation workspace">
+      <form id="explain-form" class="panel editor-panel">
+        <div class="panel-heading"><h2><span class="step-number">01</span> Your code</h2><span class="subtle">Start with something small</span></div>
+        <div class="sample-picker"><label for="sample-picker">Try an example</label><select id="sample-picker"><option value="">Choose a lesson…</option><option value="javascript">JavaScript · Filter &amp; transform</option><option value="python">Python · Count with a dictionary</option></select></div>
+        <div class="controls">
+          <label>Language<select id="language" name="language"><option>JavaScript</option><option>TypeScript</option><option>Python</option><option>Java</option><option>C</option><option>C++</option><option>C#</option><option>Go</option><option>Rust</option><option>SQL</option><option>HTML/CSS</option><option>Other</option></select></label>
+          <label>Explain for<select id="level" name="level"><option>Beginner</option><option>Intermediate</option></select></label>
+        </div>
+        <div class="editor-top"><label for="code">SNIPPET</label><button type="button" id="clear" class="text-button">Clear</button></div>
+        <div class="code-editor"><pre id="line-numbers" aria-hidden="true">1</pre><textarea id="code" name="code" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="12000" aria-describedby="code-help" aria-label="Code snippet"></textarea></div>
+        <div class="editor-bottom"><span id="character-count">0 / 12,000 characters</span><span>Code is never executed</span></div>
+        <div class="mode-row"><label>Explanation source<select id="mode"><option value="sample">Free sample</option><option value="claude" disabled>Claude · connect an API key</option></select></label><span class="mode-note" id="mode-note">Prewritten lesson for the selected example.</span></div>
+        <p id="code-help" class="privacy">Sample mode stays in your browser. Claude mode sends your snippet to Anthropic and uses API credits. Remove passwords and private data first.</p>
+        <button class="primary" id="explain-button" type="submit">Explain this code <span aria-hidden="true">↗</span></button>
+        <p id="error" class="error" role="alert" hidden></p>
+      </form>
+      <section class="panel lesson-panel" aria-labelledby="lesson-title" aria-busy="false">
+        <div class="panel-heading"><h2 id="lesson-title"><span class="step-number">02</span> The explanation</h2><span id="result-badge" class="result-badge">READY WHEN YOU ARE</span></div>
+        <div id="empty-state" class="empty-state"><div class="empty-illustration" aria-hidden="true"><span>{ }</span><i>✧</i></div><h3>Let’s make it click.</h3><p>Choose an example or paste your code,<br>then ask for an explanation.</p><div class="lesson-preview"><span>01 &nbsp; The big picture</span><span>02 &nbsp; A step-by-step walkthrough</span><span>03 &nbsp; A question to test your understanding</span></div></div>
+        <div id="loading-state" class="empty-state" hidden><span class="loader" aria-hidden="true"></span><h3>Reading between the lines…</h3><p>Building your explanation. This can take up to 45 seconds.</p></div>
+        <div id="result" hidden>
+          <div class="result-toolbar"><span id="result-context"></span><div><button type="button" id="copy" class="text-button">Copy</button><button type="button" id="download" class="text-button">Save .md</button></div></div>
+          <div class="lesson-content"><section class="overview"><p class="section-label">THE BIG PICTURE</p><p id="summary"></p></section><section><h3>Step by step</h3><div id="steps"></div></section><section><h3>Ideas to take with you</h3><ul id="concepts" class="concept-list"></ul></section><section id="cautions-section"><h3>Keep in mind</h3><ul id="cautions"></ul></section><section class="quiz"><span class="section-label">YOUR TURN</span><h3 id="quiz-question"></h3><details id="quiz-details"><summary>Reveal the answer</summary><p id="quiz-answer"></p></details></section><p class="result-disclaimer">Explanations can contain mistakes. Check important details and test code in your own environment.</p></div>
+        </div>
+      </section>
+    </section>
+    <div class="under-workspace"><p><span aria-hidden="true">✧</span> Curiosity is the only prerequisite.</p><button type="button" class="text-button" id="setup-toggle" aria-expanded="false" aria-controls="setup">Connect Claude →</button></div>
+    <section id="setup" class="setup panel" hidden><h2>Explain your own code with Claude</h2><p>Run this project locally with Node.js 22 or later. Copy <code>.env.example</code> to <code>.env</code>, add your key as <code>ANTHROPIC_API_KEY</code>, then restart with <code>npm start</code>. Keep the key on your computer; never put it in this page or a GitHub commit.</p><p>API access requires available credits. A Claude chat subscription does not supply this app with an API key. See the <a href="https://github.com/Raajasoundhar/codelens-learn#connect-claude" target="_blank" rel="noreferrer">setup guide</a> for details.</p></section>
+    <footer>Made for the moment a concept finally clicks.<span>CodeLens Learn · Open-source prototype</span></footer>
+    <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</body>
+</html>

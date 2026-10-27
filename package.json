@@ -1,0 +1,14 @@
+{
+  "name": "codelens-learn",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Understand code, one idea at a time. An open-source learning tool with optional Claude explanations.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "test": "node --test",
+    "check": "node --check server.mjs && node --check lib/explain.mjs && node --check public/app.js && node --check public/samples.js"
+  },
+  "license": "MIT"
+}
